@@ -11,7 +11,7 @@ class AirportController extends Controller
 {
 
     public function index(){
-        $airports=Airport::orderBy('name','asc')->get();
+        $airports=Airport::orderBy('name','asc')->pluck('name');
 
         return response()->json(['airports'=>$airports], 200);
     }
