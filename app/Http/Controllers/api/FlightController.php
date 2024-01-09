@@ -13,14 +13,14 @@ class FlightController extends Controller
 
         $departureAirport= Airport::where('name', $request->input('departure-airport'))->firstOrFail();
         $arrivalAirport=Airport::where('name', $request->input('arrival-airport'))->firstOrFail();
-        $departureDate=date($request->input('departure-date', now()));
+        $departureDate=date($request->input('departure-date'));
 
         if($departureAirport!=$arrivalAirport){
 
             $flights=Flight::with(['departureAirport', 'arrivalAirport'])
                              ->where('departure_airport_id', $departureAirport->id)
                              ->where('arrival_airport_id', $arrivalAirport->id)
-                             ->where('departure_datetime', '<', $departureDate)
+                             ->where('departure_datetime', '>', $departureDate)
                              ->orderBy('departure_datetime', 'ASC')
                              ->get();
             return response()->json(['flights'=>$flights], 200);
