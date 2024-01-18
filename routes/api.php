@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/airports', [AirportController::class, 'index']);
 Route::get('/flights', [FlightController::class, 'filtered']);
+Route::get('/flight/{id}', [FlightController::class, 'getFlight']);
+Route::post('/flight/{id}/reservation/submit', [FlightController::class, 'registerPassengers']);

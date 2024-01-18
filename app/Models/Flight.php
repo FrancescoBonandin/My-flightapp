@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flight extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
   public function departureAirport(){
 
@@ -21,4 +21,24 @@ class Flight extends Model
     
   }
 
+  public function airplane(){
+
+    return $this->belongsTo(Airplane::class);
+
+  }
+
+
+  public function passengers(){
+
+    return $this->belongsToMany(Passenger::class);
+
+  }
+
+  public function getAvailableSeatsAttribute(){
+    return $this->airplane->seating_capacity - $this->passengers->count();
+  }
+
+  protected $appends = [
+    'available_seats'
+  ];
 }
